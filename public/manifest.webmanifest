@@ -1,0 +1,14 @@
+{
+  "name": "Словничок",
+  "short_name": "Словничок",
+  "description": "Англійські слова, ідіоми та граматика",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F5F1E7",
+  "theme_color": "#F5F1E7",
+  "lang": "uk",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

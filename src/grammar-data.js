@@ -1,0 +1,601 @@
+// Grammar topics. Exercise format:
+//   q — sentence, "___" marks the gap, verb hint in parentheses
+//   a — accepted answers (contractions are normalized, so "don't" == "do not")
+//   o — options (multiple choice); if absent the user types the answer
+//   h — explanation shown after answering
+
+export const GROUPS = [
+  { id: "tense", title: "Часи" },
+  { id: "rule", title: "Правила" },
+];
+
+export const TOPICS = [
+  /* ===================== PRESENT ===================== */
+  {
+    id: "present-simple", group: "tense", title: "Present Simple", ua: "Теперішній простий",
+    summary: "звички, факти, розклади",
+    use: [
+      "Регулярні, повторювані дії та звички: <i>I go to the gym twice a week.</i>",
+      "Факти й загальновідомі істини: <i>The Earth goes round the Sun.</i>",
+      "Розклади та графіки: <i>The train leaves at 7:30.</i>",
+      "Стани й почуття (know, like, want, believe): <i>I know the answer.</i>",
+    ],
+    forms: [
+      ["+", "I / you / we / they <b>work</b> · he / she / it <b>works</b>"],
+      ["−", "I <b>don't work</b> · she <b>doesn't work</b>"],
+      ["?", "<b>Do</b> you <b>work</b>? · <b>Does</b> she <b>work</b>?"],
+    ],
+    markers: "always, usually, often, sometimes, rarely, never, every day, on Mondays, once a week",
+    examples: [
+      ["She works in a bank.", "Вона працює в банку."],
+      ["We don't eat meat.", "Ми не їмо м'яса."],
+      ["Does he speak English?", "Він розмовляє англійською?"],
+    ],
+    notes: [
+      "У 3-й особі однини додаємо <b>-s / -es</b>: works, goes, watches, studies (приголосна + y → ies).",
+      "Після <b>does / doesn't</b> дієслово без -s: <i>Does she know?</i> (не <s>knows</s>).",
+    ],
+    ex: [
+      { q: "She ___ (work) in a hospital.", a: ["works"] },
+      { q: "They ___ (not / like) coffee.", a: ["don't like"] },
+      { q: "___ your brother play football?", o: ["Does", "Do", "Is", "Are"], a: ["Does"], h: "he/she/it у запитанні → does." },
+      { q: "The train ___ (leave) at 7:30 every morning.", a: ["leaves"] },
+      { q: "Water ___ (boil) at 100 degrees Celsius.", a: ["boils"], h: "Загальновідомий факт → Present Simple." },
+      { q: "He ___ (not / watch) TV in the evenings.", a: ["doesn't watch"] },
+      { q: "My sister ___ (study) French.", a: ["studies"], h: "Приголосна + y → -ies." },
+      { q: "I usually ___ to work by bus.", o: ["go", "goes", "am going", "went"], a: ["go"], h: "usually — маркер Present Simple." },
+    ],
+  },
+  {
+    id: "present-continuous", group: "tense", title: "Present Continuous", ua: "Теперішній тривалий",
+    summary: "дія зараз, тимчасове, домовленості",
+    use: [
+      "Дія відбувається зараз, у момент мовлення: <i>I'm reading now.</i>",
+      "Тимчасова ситуація: <i>She's living with her parents this month.</i>",
+      "Заплановані домовленості на найближче майбутнє: <i>We're meeting Tom tomorrow.</i>",
+      "Зміни й тенденції: <i>Prices are rising.</i>",
+    ],
+    forms: [
+      ["+", "I <b>am working</b> · he <b>is working</b> · they <b>are working</b>"],
+      ["−", "I<b>'m not working</b> · she <b>isn't working</b> · we <b>aren't working</b>"],
+      ["?", "<b>Are</b> you <b>working</b>? · <b>Is</b> he <b>working</b>?"],
+    ],
+    markers: "now, right now, at the moment, today, this week, these days, Look!, Listen!",
+    examples: [
+      ["Look! It's snowing.", "Дивись! Іде сніг."],
+      ["I'm not working today.", "Я сьогодні не працюю."],
+      ["What are you doing?", "Що ти робиш?"],
+    ],
+    notes: [
+      "Дієслова стану (know, like, love, want, need, believe, understand, belong) зазвичай <b>не</b> вживаються в Continuous: <i>I understand</i>, а не <s>I'm understanding</s>.",
+      "Правопис: make → making, run → running, lie → lying.",
+    ],
+    ex: [
+      { q: "Look! It ___ (rain).", a: ["is raining", "'s raining"] },
+      { q: "I ___ (read) a really interesting book this week.", a: ["am reading"] },
+      { q: "What ___ right now?", o: ["are you doing", "do you do", "you are doing", "are you do"], a: ["are you doing"] },
+      { q: "She ___ (not / work) today, she's ill.", a: ["isn't working"] },
+      { q: "We ___ (meet) Tom at 6 tomorrow — it's all arranged.", a: ["are meeting"], h: "Домовленість на майбутнє → Present Continuous." },
+      { q: "I ___ this rule now.", o: ["understand", "am understanding", "understands", "is understanding"], a: ["understand"], h: "understand — дієслово стану, в Continuous не вживається." },
+      { q: "Listen! Somebody ___ (sing) in the next room.", a: ["is singing"] },
+      { q: "Prices ___ (rise) these days.", a: ["are rising"] },
+    ],
+  },
+  {
+    id: "present-perfect", group: "tense", title: "Present Perfect", ua: "Теперішній доконаний",
+    summary: "результат зараз, досвід, «вже/ще не»",
+    use: [
+      "Дія завершилась, але важливий її результат зараз: <i>I've lost my keys</i> (і тепер їх немає).",
+      "Досвід за життя: <i>Have you ever been to Italy?</i>",
+      "Дія почалась у минулому й триває досі (з дієсловами стану): <i>I've known her for years.</i>",
+      "Щойно завершена дія: <i>She has just left.</i>",
+    ],
+    forms: [
+      ["+", "I / you / we / they <b>have worked</b> · he / she / it <b>has worked</b>"],
+      ["−", "I <b>haven't seen</b> · she <b>hasn't seen</b>"],
+      ["?", "<b>Have</b> you <b>seen</b>? · <b>Has</b> he <b>finished</b>?"],
+    ],
+    markers: "just, already, yet, ever, never, recently, lately, so far, for, since, this week (поки не закінчився)",
+    examples: [
+      ["I've already done my homework.", "Я вже зробив домашнє завдання."],
+      ["She hasn't called yet.", "Вона ще не дзвонила."],
+      ["We have lived here since 2015.", "Ми живемо тут з 2015 року."],
+    ],
+    notes: [
+      "<b>Не</b> вживається з точним минулим часом: yesterday, last year, in 2010, two days ago — там Past Simple.",
+      "V3 — третя форма дієслова: worked, seen, gone, written, been.",
+      "<b>for</b> + проміжок (for two years), <b>since</b> + початок (since Monday).",
+    ],
+    ex: [
+      { q: "I ___ (already / finish) my homework.", a: ["have already finished"] },
+      { q: "She ___ (never / be) to Japan.", a: ["has never been"] },
+      { q: "___ sushi?", o: ["Have you ever eaten", "Did you ever eaten", "Have you ever ate", "Has you ever eaten"], a: ["Have you ever eaten"] },
+      { q: "They ___ (live) here since 2015.", a: ["have lived", "have been living"] },
+      { q: "I ___ my keys yesterday.", o: ["lost", "have lost", "had lost", "lose"], a: ["lost"], h: "yesterday — точний час у минулому → Past Simple." },
+      { q: "He ___ (not / call) me yet.", a: ["hasn't called"] },
+      { q: "We ___ (know) each other for ten years.", a: ["have known"], h: "know — дієслово стану, тому Perfect, а не Perfect Continuous." },
+      { q: "Oh no! I ___ (break) my phone.", a: ["have broken"], h: "Результат важливий зараз → Present Perfect." },
+    ],
+  },
+  {
+    id: "present-perfect-continuous", group: "tense", title: "Present Perfect Continuous", ua: "Теперішній доконано-тривалий",
+    summary: "як довго триває досі",
+    use: [
+      "Дія почалась у минулому й триває досі, наголос на тривалості: <i>I've been waiting for an hour.</i>",
+      "Дія щойно закінчилась, і видно її наслідки: <i>You're wet. Have you been running?</i>",
+    ],
+    forms: [
+      ["+", "I / you / we / they <b>have been working</b> · he <b>has been working</b>"],
+      ["−", "I <b>haven't been working</b> · she <b>hasn't been working</b>"],
+      ["?", "<b>Have</b> you <b>been working</b>? · <b>How long has</b> she <b>been working</b>?"],
+    ],
+    markers: "for, since, how long, all day, all morning, lately, recently",
+    examples: [
+      ["It has been raining since morning.", "Дощ іде з самого ранку."],
+      ["How long have you been learning English?", "Як довго ти вчиш англійську?"],
+    ],
+    notes: [
+      "З дієсловами стану — Present Perfect: <i>I've known him for years</i>, а не <s>have been knowing</s>.",
+      "Perfect — наголос на результаті (<i>I've written 3 letters</i>), Perfect Continuous — на процесі (<i>I've been writing letters all day</i>).",
+    ],
+    ex: [
+      { q: "I ___ (wait) for you for two hours!", a: ["have been waiting"] },
+      { q: "How long ___ English?", o: ["have you been learning", "are you learning", "did you learn", "have you learning"], a: ["have you been learning"] },
+      { q: "She is tired because she ___ (work) all day.", a: ["has been working"] },
+      { q: "It ___ (rain) since morning.", a: ["has been raining"] },
+      { q: "They ___ (not / sleep) well lately.", a: ["haven't been sleeping"] },
+      { q: "I ___ him since we were children.", o: ["have known", "have been knowing", "know", "am knowing"], a: ["have known"], h: "know — дієслово стану." },
+      { q: "Your eyes are red. ___?", o: ["Have you been crying", "Did you cry", "Are you crying", "Do you cry"], a: ["Have you been crying"], h: "Видно наслідки щойно закінченої тривалої дії." },
+      { q: "We ___ (look) for a new flat for months.", a: ["have been looking"] },
+    ],
+  },
+
+  /* ===================== PAST ===================== */
+  {
+    id: "past-simple", group: "tense", title: "Past Simple", ua: "Минулий простий",
+    summary: "завершена дія в минулому",
+    use: [
+      "Завершена дія в конкретний момент у минулому: <i>I saw him yesterday.</i>",
+      "Послідовність дій у минулому: <i>She came in, took off her coat and sat down.</i>",
+      "Минулі звички (також <i>used to</i>): <i>I played tennis when I was young.</i>",
+    ],
+    forms: [
+      ["+", "I <b>worked</b> · she <b>went</b> (V2 для всіх осіб)"],
+      ["−", "I <b>didn't work</b> · she <b>didn't go</b>"],
+      ["?", "<b>Did</b> you <b>work</b>? · <b>Did</b> she <b>go</b>?"],
+    ],
+    markers: "yesterday, last week / month / year, ago, in 2010, when I was a child, then",
+    examples: [
+      ["We visited Lviv last summer.", "Ми відвідали Львів минулого літа."],
+      ["He didn't come to the party.", "Він не прийшов на вечірку."],
+      ["Did you call her?", "Ти їй подзвонив?"],
+    ],
+    notes: [
+      "Правильні дієслова: + <b>-ed</b> (worked, stopped, studied).",
+      "Неправильні — друга форма: go → went, see → saw, buy → bought, write → wrote.",
+      "Після <b>did / didn't</b> — перша форма: <i>Did you go?</i> (не <s>went</s>).",
+    ],
+    ex: [
+      { q: "I ___ (visit) my grandparents last weekend.", a: ["visited"] },
+      { q: "She ___ (go) to Paris two years ago.", a: ["went"] },
+      { q: "We ___ (not / see) him yesterday.", a: ["didn't see"] },
+      { q: "___ the film last night?", o: ["Did you like", "Did you liked", "Have you liked", "Do you liked"], a: ["Did you like"] },
+      { q: "He ___ (buy) a new car in May.", a: ["bought"] },
+      { q: "When I was a child, I ___ (play) in the park every day.", a: ["played", "used to play"] },
+      { q: "The film ___ (begin) at eight.", a: ["began"] },
+      { q: "Shakespeare ___ (write) Hamlet.", a: ["wrote"] },
+    ],
+  },
+  {
+    id: "past-continuous", group: "tense", title: "Past Continuous", ua: "Минулий тривалий",
+    summary: "процес у певний момент минулого",
+    use: [
+      "Дія тривала в певний момент у минулому: <i>At 8 pm I was having dinner.</i>",
+      "Тривала дія, яку перервала інша (Past Simple): <i>I was sleeping when the phone rang.</i>",
+      "Дві паралельні дії: <i>While I was cooking, he was cleaning.</i>",
+      "Фон розповіді: <i>The sun was shining and birds were singing.</i>",
+    ],
+    forms: [
+      ["+", "I / he / she / it <b>was working</b> · you / we / they <b>were working</b>"],
+      ["−", "I <b>wasn't working</b> · they <b>weren't working</b>"],
+      ["?", "<b>Was</b> she <b>working</b>? · <b>Were</b> you <b>working</b>?"],
+    ],
+    markers: "at 5 o'clock yesterday, at that moment, while, when, all evening, from 2 to 4",
+    examples: [
+      ["I was walking home when it started to rain.", "Я йшов додому, коли почався дощ."],
+      ["What were you doing at midnight?", "Що ти робив опівночі?"],
+    ],
+    notes: ["<b>while</b> + тривала дія (Past Continuous), <b>when</b> + коротка дія (зазвичай Past Simple)."],
+    ex: [
+      { q: "At 8 pm yesterday I ___ (watch) TV.", a: ["was watching"] },
+      { q: "They ___ (play) football when it started to rain.", a: ["were playing"] },
+      { q: "While she ___ (cook), he was cleaning the flat.", a: ["was cooking"] },
+      { q: "I ___ when you called.", o: ["was sleeping", "slept", "am sleeping", "have slept"], a: ["was sleeping"], h: "Тривала дія, яку перервала інша." },
+      { q: "What ___ at midnight?", o: ["were you doing", "did you doing", "was you doing", "you were doing"], a: ["were you doing"] },
+      { q: "We ___ (not / listen) to the teacher.", a: ["weren't listening"] },
+      { q: "When I arrived, she ___ (talk) on the phone.", a: ["was talking"] },
+      { q: "The sun ___ (shine) and the birds were singing.", a: ["was shining"] },
+    ],
+  },
+  {
+    id: "past-perfect", group: "tense", title: "Past Perfect", ua: "Минулий доконаний",
+    summary: "«минуле в минулому»",
+    use: [
+      "Дія завершилась до іншої дії чи моменту в минулому: <i>When we arrived, the train had left.</i>",
+      "У непрямій мові замість Past Simple / Present Perfect: <i>She said she had seen it.</i>",
+      "У Third Conditional: <i>If I had known, I would have come.</i>",
+    ],
+    forms: [
+      ["+", "<b>had</b> + V3 для всіх осіб: I <b>had finished</b>"],
+      ["−", "I <b>hadn't finished</b>"],
+      ["?", "<b>Had</b> you <b>finished</b>?"],
+    ],
+    markers: "before, after, by the time, by then, already, just, never (у минулому контексті)",
+    examples: [
+      ["By the time I got home, they had eaten everything.", "Поки я дістався додому, вони вже все з'їли."],
+      ["I had never seen snow before that winter.", "Я ніколи не бачив снігу до тієї зими."],
+    ],
+    ex: [
+      { q: "When we arrived, the train ___ (already / leave).", a: ["had already left"] },
+      { q: "She ___ (never / see) the sea before that trip.", a: ["had never seen"] },
+      { q: "By the time I got home, they ___ (eat) all the pizza.", a: ["had eaten"] },
+      { q: "I didn't go to the cinema because I ___ the film.", o: ["had seen", "have seen", "saw", "was seeing"], a: ["had seen"], h: "Подивився раніше за інший минулий момент → Past Perfect." },
+      { q: "He ___ (not / finish) his work before the boss came.", a: ["hadn't finished"] },
+      { q: "After she ___ (read) the letter, she started to cry.", a: ["had read"] },
+      { q: "___ to London before 2020?", o: ["Had you ever been", "Have you ever been", "Did you ever been", "Were you ever been"], a: ["Had you ever been"] },
+      { q: "They were hungry because they ___ (not / eat) all day.", a: ["hadn't eaten", "hadn't been eating"] },
+    ],
+  },
+  {
+    id: "past-perfect-continuous", group: "tense", title: "Past Perfect Continuous", ua: "Минулий доконано-тривалий",
+    summary: "як довго тривало до моменту в минулому",
+    use: [
+      "Тривала дія, що почалась до певного моменту в минулому й тривала до нього: <i>She had been working there for 5 years before she left.</i>",
+      "Причина стану в минулому: <i>He was tired because he had been running.</i>",
+    ],
+    forms: [
+      ["+", "<b>had been</b> + V-ing: I <b>had been waiting</b>"],
+      ["−", "I <b>hadn't been waiting</b>"],
+      ["?", "<b>Had</b> you <b>been waiting</b>? · <b>How long had</b> you <b>been waiting</b>?"],
+    ],
+    markers: "for, since, how long, before, by the time, all day",
+    examples: [
+      ["The ground was wet. It had been raining.", "Земля була мокра. Ішов дощ."],
+      ["We had been driving for hours, so we stopped.", "Ми їхали кілька годин, тож зупинилися."],
+    ],
+    ex: [
+      { q: "She ___ (work) there for five years before she left.", a: ["had been working", "had worked"] },
+      { q: "He was tired because he ___ (run).", a: ["had been running"] },
+      { q: "How long ___ before the bus came?", o: ["had you been waiting", "have you been waiting", "were you waiting", "did you waiting"], a: ["had you been waiting"] },
+      { q: "The ground was wet. It ___ (rain).", a: ["had been raining"] },
+      { q: "They ___ (talk) for an hour when the manager finally arrived.", a: ["had been talking"] },
+      { q: "I ___ (not / sleep) long when the phone rang.", a: ["hadn't been sleeping"] },
+      { q: "We ___ (drive) for hours, so we needed a break.", a: ["had been driving"] },
+    ],
+  },
+
+  /* ===================== FUTURE ===================== */
+  {
+    id: "future-simple", group: "tense", title: "Future Simple", ua: "Майбутній простий",
+    summary: "рішення зараз, прогнози, обіцянки",
+    use: [
+      "Рішення, прийняте в момент мовлення: <i>I'm cold. I'll close the window.</i>",
+      "Прогноз або думка про майбутнє: <i>I think it will rain.</i>",
+      "Обіцянки, пропозиції, прохання: <i>I'll help you. Will you marry me?</i>",
+      "Факти про майбутнє: <i>She will be 30 next year.</i>",
+    ],
+    forms: [
+      ["+", "<b>will</b> + V1: I <b>will go</b> (I'll go)"],
+      ["−", "I <b>won't go</b> (will not)"],
+      ["?", "<b>Will</b> you <b>go</b>?"],
+    ],
+    markers: "tomorrow, next week, in 2030, soon, I think, probably, I'm sure, I hope",
+    examples: [
+      ["I'll call you tonight.", "Я подзвоню тобі ввечері."],
+      ["I promise I won't be late.", "Обіцяю, що не запізнюся."],
+    ],
+    notes: [
+      "<b>be going to</b> — для заздалегідь запланованих намірів (<i>I'm going to study medicine</i>) і прогнозів за очевидними ознаками (<i>Look at the clouds! It's going to rain.</i>).",
+      "Після <b>when, if, before, after, until, as soon as</b> у підрядних часу та умови — Present Simple, не will: <i>When I get home, I'll call you.</i>",
+    ],
+    ex: [
+      { q: "I'm thirsty. — Wait, I ___ (get) you some water.", a: ["will get"], h: "Рішення в момент мовлення → will." },
+      { q: "I think it ___ (be) sunny tomorrow.", a: ["will be"] },
+      { q: "I promise I ___ (not / tell) anyone.", a: ["won't tell"] },
+      { q: "When I ___ home, I'll call you.", o: ["get", "will get", "got", "am getting"], a: ["get"], h: "Після when у підрядному часу — Present Simple." },
+      { q: "Look at those clouds! It ___ rain.", o: ["is going to", "will", "rains", "is raining"], a: ["is going to"], h: "Прогноз на основі очевидних ознак → be going to." },
+      { q: "___ you help me with this box, please?", o: ["Will", "Do", "Are", "Does"], a: ["Will"] },
+      { q: "She ___ (be) 30 next year.", a: ["will be"] },
+      { q: "We've decided: we ___ buy a new car.", o: ["are going to", "will", "buys", "shall to"], a: ["are going to"], h: "Заздалегідь прийняте рішення → be going to." },
+    ],
+  },
+  {
+    id: "future-continuous", group: "tense", title: "Future Continuous", ua: "Майбутній тривалий",
+    summary: "процес у момент майбутнього",
+    use: [
+      "Дія триватиме в певний момент у майбутньому: <i>At 10 tomorrow I'll be flying to Rome.</i>",
+      "Ввічливе запитання про плани: <i>Will you be using the car tonight?</i>",
+    ],
+    forms: [
+      ["+", "<b>will be</b> + V-ing: I <b>will be working</b>"],
+      ["−", "I <b>won't be working</b>"],
+      ["?", "<b>Will</b> you <b>be working</b>?"],
+    ],
+    markers: "at this time tomorrow, at 5 pm tomorrow, this time next week, all day tomorrow",
+    examples: [
+      ["This time next week we'll be lying on the beach.", "Цього часу наступного тижня ми лежатимемо на пляжі."],
+    ],
+    ex: [
+      { q: "At this time tomorrow I ___ (fly) to London.", a: ["will be flying"] },
+      { q: "Don't call at 8 — we ___ (have) dinner.", a: ["will be having"] },
+      { q: "This time next week they ___ (lie) on the beach.", a: ["will be lying"] },
+      { q: "___ the car tonight? I need it.", o: ["Will you be using", "Will you using", "Are you use", "Will you be use"], a: ["Will you be using"] },
+      { q: "She ___ (not / work) tomorrow afternoon.", a: ["won't be working"] },
+      { q: "At 10 am tomorrow I ___ an exam.", o: ["will be writing", "write", "am write", "will writing"], a: ["will be writing"] },
+    ],
+  },
+  {
+    id: "future-perfect", group: "tense", title: "Future Perfect", ua: "Майбутній доконаний",
+    summary: "завершиться до моменту в майбутньому",
+    use: ["Дія завершиться до певного моменту в майбутньому: <i>By 2030 I will have finished university.</i>"],
+    forms: [
+      ["+", "<b>will have</b> + V3: I <b>will have finished</b>"],
+      ["−", "I <b>won't have finished</b>"],
+      ["?", "<b>Will</b> you <b>have finished</b>?"],
+    ],
+    markers: "by tomorrow, by 5 o'clock, by the end of the year, by the time, before",
+    examples: [["By the time you arrive, we'll have cooked dinner.", "Поки ти приїдеш, ми вже приготуємо вечерю."]],
+    ex: [
+      { q: "By 2030 I ___ (finish) university.", a: ["will have finished"] },
+      { q: "By the time you arrive, we ___ (cook) dinner.", a: ["will have cooked"] },
+      { q: "She ___ (not / read) the book by Monday.", a: ["won't have read"] },
+      { q: "___ the bridge by next summer?", o: ["Will they have built", "Will they built", "Have they will build", "Will they have build"], a: ["Will they have built"] },
+      { q: "By the end of this month I ___ here for a year.", o: ["will have worked", "will work", "work", "am working"], a: ["will have worked"] },
+      { q: "The film ___ (start) by the time we get there.", a: ["will have started"] },
+    ],
+  },
+  {
+    id: "future-perfect-continuous", group: "tense", title: "Future Perfect Continuous", ua: "Майбутній доконано-тривалий",
+    summary: "як довго триватиме до моменту",
+    use: ["Дія триватиме вже певний час до моменту в майбутньому (наголос на тривалості): <i>By June I'll have been working here for 10 years.</i>"],
+    forms: [
+      ["+", "<b>will have been</b> + V-ing"],
+      ["−", "<b>won't have been</b> + V-ing"],
+      ["?", "<b>Will</b> you <b>have been working</b>?"],
+    ],
+    markers: "for … by …, by the time, by next year",
+    examples: [["In ten minutes we'll have been waiting for an hour!", "Через десять хвилин ми чекатимемо вже годину!"]],
+    ex: [
+      { q: "By next June I ___ (work) here for ten years.", a: ["will have been working", "will have worked"] },
+      { q: "By the time he retires, he ___ (teach) for 40 years.", a: ["will have been teaching", "will have taught"] },
+      { q: "In ten minutes we ___ (wait) for an hour!", a: ["will have been waiting"] },
+      { q: "By 6 pm she ___ for eight hours.", o: ["will have been studying", "will be studying", "studies", "will study"], a: ["will have been studying"] },
+      { q: "Next month they ___ (live) in Kyiv for 5 years.", a: ["will have been living", "will have lived"] },
+    ],
+  },
+
+  /* ===================== RULES ===================== */
+  {
+    id: "articles", group: "rule", title: "Артиклі a / an / the", ua: "коли який артикль",
+    summary: "a / an / the / без артикля",
+    blocks: [
+      { h: "a / an — неозначений", list: [
+        "Вперше згадуємо злічуваний предмет в однині: <i>I saw a dog.</i>",
+        "Професія: <i>She is a doctor.</i>",
+        "У значенні «один»: <i>an hour, a week</i>.",
+        "<b>an</b> — перед голосним <b>звуком</b>: an apple, an hour; але <b>a</b> university, a European (звук [j]).",
+      ] },
+      { h: "the — означений", list: [
+        "Предмет уже відомий або згадувався: <i>The dog was big.</i>",
+        "Єдиний у своєму роді: the sun, the moon, the world.",
+        "Найвищий ступінь і порядкові числівники: the best, the first.",
+        "Річки, моря, океани, гори-хребти, країни з Republic / Kingdom / States: the Dnipro, the Alps, the USA, the UK.",
+        "Музичні інструменти: play the guitar.",
+      ] },
+      { h: "Без артикля", list: [
+        "Множина та незлічувані в загальному значенні: <i>I like cats. Water is important.</i>",
+        "Імена, більшість країн і міст: Ukraine, Kyiv.",
+        "Прийоми їжі, мови, види спорту: have breakfast, speak English, play tennis.",
+        "Сталі вирази: by bus, at home, go to school / work / bed.",
+      ] },
+    ],
+    ex: [
+      { q: "I saw ___ elephant at the zoo.", o: ["an", "a", "the", "—"], a: ["an"] },
+      { q: "___ sun rises in the east.", o: ["The", "A", "An", "—"], a: ["The"], h: "Єдиний у своєму роді → the." },
+      { q: "She is ___ engineer.", o: ["an", "a", "the", "—"], a: ["an"] },
+      { q: "I like ___ music.", o: ["—", "the", "a", "an"], a: ["—"], h: "Незлічуване в загальному значенні — без артикля." },
+      { q: "He plays ___ guitar very well.", o: ["the", "a", "—", "an"], a: ["the"] },
+      { q: "I need ___ hour to finish.", o: ["an", "a", "the", "—"], a: ["an"], h: "h в hour не читається → голосний звук → an." },
+      { q: "It's ___ university in London.", o: ["a", "an", "the", "—"], a: ["a"], h: "university починається зі звуку [j] → a." },
+      { q: "This is ___ best day of my life.", o: ["the", "a", "—", "an"], a: ["the"] },
+      { q: "We usually have ___ breakfast at 8.", o: ["—", "a", "the", "an"], a: ["—"] },
+      { q: "I bought a book and a pen. ___ book is very interesting.", o: ["The", "A", "—", "An"], a: ["The"], h: "Друга згадка → the." },
+    ],
+  },
+  {
+    id: "conditionals", group: "rule", title: "Умовні речення", ua: "Conditionals 0–3",
+    summary: "if-речення всіх типів",
+    blocks: [
+      { h: "Типи", table: [
+        ["Тип", "Будова", "Коли", "Приклад"],
+        ["Zero", "If + Present Simple, Present Simple", "загальні істини", "If you heat ice, it melts."],
+        ["First", "If + Present Simple, will + V1", "реальна умова в майбутньому", "If it rains, I'll stay home."],
+        ["Second", "If + Past Simple, would + V1", "нереальне зараз / малоймовірне", "If I had money, I would travel."],
+        ["Third", "If + Past Perfect, would have + V3", "нереальне в минулому, жаль", "If I had studied, I would have passed."],
+        ["Mixed", "If + Past Perfect, would + V1", "минуле → наслідок зараз", "If I had taken the job, I would be rich now."],
+      ] },
+    ],
+    notes: [
+      "У частині з <b>if</b> не вживаємо will / would.",
+      "У Second Conditional часто <b>were</b> для всіх осіб: <i>If I were you…</i>",
+      "<b>unless</b> = if not: <i>You won't pass unless you study.</i>",
+    ],
+    ex: [
+      { q: "If you heat water to 100°C, it ___ (boil).", a: ["boils"] },
+      { q: "If it ___ (rain) tomorrow, we will stay at home.", a: ["rains"], h: "First Conditional: if + Present Simple." },
+      { q: "If I ___ (have) more time, I would learn Spanish.", a: ["had"], h: "Second Conditional: if + Past Simple." },
+      { q: "If I were you, I ___ that job.", o: ["would take", "will take", "take", "would have taken"], a: ["would take"] },
+      { q: "If she had studied harder, she ___ the exam.", o: ["would have passed", "would pass", "will pass", "passed"], a: ["would have passed"], h: "Third Conditional." },
+      { q: "If we ___ (leave) earlier, we wouldn't have missed the train.", a: ["had left"] },
+      { q: "I'll call you if I ___ (need) help.", a: ["need"] },
+      { q: "If I had won the lottery last year, I ___ rich now.", o: ["would be", "would have been", "will be", "am"], a: ["would be"], h: "Mixed: умова в минулому, наслідок зараз." },
+      { q: "You won't pass ___ you study.", o: ["unless", "if", "when", "because"], a: ["unless"] },
+    ],
+  },
+  {
+    id: "passive", group: "rule", title: "Пасивний стан", ua: "Passive Voice",
+    summary: "be + V3",
+    blocks: [
+      { h: "Коли вживаємо", list: [
+        "Важлива дія або об'єкт, а не виконавець: <i>The bridge was built in 1990.</i>",
+        "Виконавець невідомий або очевидний: <i>My bike was stolen.</i>",
+        "Виконавця можна додати через <b>by</b>: <i>written by Shevchenko</i>.",
+      ] },
+      { h: "Формула: be (у потрібному часі) + V3", table: [
+        ["Час", "Форма", "Приклад"],
+        ["Present Simple", "am / is / are + V3", "English is spoken here."],
+        ["Present Continuous", "am / is / are being + V3", "The car is being repaired."],
+        ["Past Simple", "was / were + V3", "The letter was sent."],
+        ["Present Perfect", "have / has been + V3", "The work has been done."],
+        ["Future Simple", "will be + V3", "It will be finished tomorrow."],
+        ["Модальні", "can / must / should be + V3", "Rules must be followed."],
+      ] },
+    ],
+    ex: [
+      { q: "This house ___ (build) in 1920.", a: ["was built"] },
+      { q: "English ___ (speak) all over the world.", a: ["is spoken"] },
+      { q: "The letters ___ (send) tomorrow.", a: ["will be sent"] },
+      { q: "My car ___ right now.", o: ["is being repaired", "is repairing", "repairs", "has repaired"], a: ["is being repaired"] },
+      { q: "The thief ___ (already / catch).", a: ["has already been caught"] },
+      { q: "This poem ___ by Lesya Ukrainka.", o: ["was written", "wrote", "is writing", "was wrote"], a: ["was written"] },
+      { q: "The rules must ___ (follow).", a: ["be followed"] },
+      { q: "Many trees ___ (cut) down last year.", a: ["were cut"] },
+    ],
+  },
+  {
+    id: "modals", group: "rule", title: "Модальні дієслова", ua: "can, must, should, may…",
+    summary: "можливість, обов'язок, порада",
+    blocks: [
+      { h: "Значення", table: [
+        ["Дієслово", "Значення", "Приклад"],
+        ["can / could", "вміння, можливість, дозвіл; could — у минулому або ввічливо", "I can swim. Could you help me?"],
+        ["must", "обов'язок (від мовця), сильна впевненість", "I must go. He must be tired."],
+        ["have to", "обов'язок через обставини", "I have to wear a uniform."],
+        ["mustn't", "заборона", "You mustn't smoke here."],
+        ["don't have to", "немає потреби", "You don't have to come."],
+        ["should", "порада", "You should see a doctor."],
+        ["may / might", "ймовірність; may — офіційний дозвіл", "It might rain. May I come in?"],
+      ] },
+    ],
+    notes: ["Після модальних — дієслово без <b>to</b> (крім have to, ought to): <i>She can swim</i>, а не <s>can to swim</s>."],
+    ex: [
+      { q: "You ___ smoke here. It's forbidden.", o: ["mustn't", "don't have to", "shouldn't to", "can"], a: ["mustn't"] },
+      { q: "Tomorrow is Sunday, so I ___ get up early.", o: ["don't have to", "mustn't", "can't", "shouldn't to"], a: ["don't have to"], h: "Немає потреби → don't have to (mustn't — заборона)." },
+      { q: "You look ill. You ___ see a doctor.", o: ["should", "can", "may", "would"], a: ["should"] },
+      { q: "She ___ swim when she was five.", o: ["could", "can", "must", "should"], a: ["could"] },
+      { q: "Take an umbrella. It ___ rain later.", o: ["might", "must", "should to", "can to"], a: ["might"] },
+      { q: "He has been working all day. He ___ be tired.", o: ["must", "can", "should", "may to"], a: ["must"], h: "Сильна впевненість → must." },
+      { q: "___ I open the window?", o: ["May", "Must", "Should to", "Have"], a: ["May"] },
+      { q: "I ___ (can / not) understand this text.", a: ["can't", "cannot"] },
+    ],
+  },
+  {
+    id: "comparison", group: "rule", title: "Ступені порівняння", ua: "big — bigger — the biggest",
+    summary: "-er / more, -est / the most",
+    blocks: [
+      { h: "Як утворюємо", table: [
+        ["Прикметник", "Вищий", "Найвищий"],
+        ["Односкладові: tall", "taller", "the tallest"],
+        ["Голосна + приголосна: big", "bigger", "the biggest"],
+        ["На -y: happy", "happier", "the happiest"],
+        ["Багатоскладові: interesting", "more interesting", "the most interesting"],
+        ["good", "better", "the best"],
+        ["bad", "worse", "the worst"],
+        ["far", "farther / further", "the farthest / furthest"],
+        ["little", "less", "the least"],
+        ["much / many", "more", "the most"],
+      ] },
+      { h: "Конструкції", list: [
+        "<b>than</b> — ніж: <i>She is taller than me.</i>",
+        "<b>as … as</b> — такий самий: <i>He is as tall as his father.</i>",
+        "<b>not as … as</b> — не такий: <i>It's not as cold as yesterday.</i>",
+      ] },
+    ],
+    ex: [
+      { q: "This book is ___ (interesting) than that one.", a: ["more interesting"] },
+      { q: "He is the ___ (tall) boy in the class.", a: ["tallest"] },
+      { q: "Today is ___ (hot) than yesterday.", a: ["hotter"] },
+      { q: "This is the ___ (good) pizza I've ever eaten.", a: ["best"] },
+      { q: "My exam results were ___ (bad) than I expected.", a: ["worse"] },
+      { q: "She is as ___ as her sister.", o: ["clever", "cleverer", "the cleverest", "more clever"], a: ["clever"], h: "as … as — звичайна форма прикметника." },
+      { q: "This is the ___ (expensive) hotel in the city.", a: ["most expensive"] },
+      { q: "I'm ___ (happy) now than before.", a: ["happier"] },
+    ],
+  },
+  {
+    id: "gerund-infinitive", group: "rule", title: "Gerund чи Infinitive", ua: "doing чи to do",
+    summary: "enjoy doing vs want to do",
+    blocks: [
+      { h: "-ing (герундій) після", list: [
+        "enjoy, finish, mind, avoid, suggest, keep, miss, practise, give up, can't stand",
+        "прийменників: interested in, good at, look forward to, instead of, before / after",
+      ] },
+      { h: "to + V (інфінітив) після", list: [
+        "want, decide, hope, plan, agree, promise, refuse, learn, manage, would like, need",
+      ] },
+      { h: "Обидва, але значення змінюється", list: [
+        "<b>stop</b>: stop smoking — кинути курити; stop to smoke — зупинитися, щоб покурити.",
+        "<b>remember / forget</b>: remember to lock — не забути зробити; remember locking — пам'ятати, що зробив.",
+        "<b>try</b>: try to open — намагатися; try opening — спробувати як варіант.",
+      ] },
+      { h: "Обидва без різниці", list: ["like, love, hate, start, begin, continue, prefer"] },
+    ],
+    ex: [
+      { q: "I enjoy ___ (read) books.", a: ["reading"] },
+      { q: "She decided ___ (learn) Japanese.", a: ["to learn"] },
+      { q: "Would you mind ___ (close) the door?", a: ["closing"] },
+      { q: "We hope ___ (see) you soon.", a: ["to see"] },
+      { q: "I'm looking forward to ___ (meet) you.", a: ["meeting"], h: "look forward to — тут to є прийменником, тому -ing." },
+      { q: "He stopped ___ because it was bad for his health.", o: ["smoking", "to smoke", "smoke", "smoked"], a: ["smoking"] },
+      { q: "Remember ___ the door when you leave!", o: ["to lock", "locking", "lock", "locked"], a: ["to lock"], h: "Не забути зробити в майбутньому → to + V." },
+      { q: "They agreed ___ (help) us.", a: ["to help"] },
+      { q: "She is good at ___ (draw).", a: ["drawing"] },
+    ],
+  },
+  {
+    id: "reported-speech", group: "rule", title: "Непряма мова", ua: "Reported Speech",
+    summary: "зсув часів після said / told",
+    blocks: [
+      { h: "Зсув часів (якщо said / told у минулому)", table: [
+        ["Пряма мова", "Непряма мова"],
+        ["Present Simple: \"I work\"", "Past Simple: he said he worked"],
+        ["Present Continuous: \"I'm working\"", "Past Continuous: he was working"],
+        ["Present Perfect / Past Simple", "Past Perfect: he had worked"],
+        ["will", "would"],
+        ["can", "could"],
+        ["must", "had to"],
+      ] },
+      { h: "Слова часу й місця", list: [
+        "now → then · today → that day · tomorrow → the next day",
+        "yesterday → the day before · here → there · this → that",
+      ] },
+      { h: "Запитання й прохання", list: [
+        "Прямий порядок слів: <i>She asked where I lived</i> (не <s>where did I live</s>).",
+        "Загальні запитання — через <b>if / whether</b>: <i>He asked if I was ready.</i>",
+        "Накази: <i>told me to do / not to do</i>.",
+      ] },
+    ],
+    ex: [
+      { q: "\"I am tired,\" she said. → She said that she ___ tired.", a: ["was"] },
+      { q: "\"I will call you,\" he said. → He said he ___ me.", a: ["would call"] },
+      { q: "\"We have finished,\" they said. → They said they ___.", a: ["had finished"] },
+      { q: "\"I can swim,\" Tom said. → Tom said he ___ swim.", a: ["could"] },
+      { q: "\"Where do you live?\" she asked. → She asked me where I ___.", o: ["lived", "do live", "did live", "live"], a: ["lived"], h: "У непрямому запитанні — прямий порядок слів без do/did." },
+      { q: "\"Are you ready?\" he asked. → He asked ___ I was ready.", o: ["if", "that", "what", "do"], a: ["if"] },
+      { q: "\"Don't be late,\" the teacher said. → The teacher told us ___ late.", o: ["not to be", "don't be", "to not", "not be"], a: ["not to be"] },
+      { q: "\"I saw him yesterday,\" she said. → She said she had seen him ___.", o: ["the day before", "yesterday", "tomorrow", "today"], a: ["the day before"] },
+    ],
+  },
+];
+
+export const TOPIC_BY_ID = Object.fromEntries(TOPICS.map(t => [t.id, t]));
