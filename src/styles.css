@@ -297,6 +297,15 @@ ol.steps li { margin-bottom: 6px; }
 .dot.error { background: var(--bad); }
 .dot.syncing, .dot.idle { background: var(--amber); }
 
+/* ---------- toast ---------- */
+.toast {
+  position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom)); transform: translateX(-50%);
+  background: var(--accent-dark); color: #fff; font-size: 14px; font-weight: 600;
+  padding: 11px 18px; border-radius: 10px; box-shadow: var(--shadow);
+  max-width: calc(100% - 32px); text-align: center; transition: opacity .4s; z-index: 10;
+}
+.toast.hide { opacity: 0; }
+
 /* ---------- footer ---------- */
 footer.foot { margin-top: 16px; font-size: 12.5px; color: var(--ink-faint); text-align: center; }
 footer.foot .sync-error { color: var(--bad); }

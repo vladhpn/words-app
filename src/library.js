@@ -52,7 +52,11 @@ function renderList() {
 
   list.innerHTML = words.map(w => {
     const st = statusOf(w);
-    const next = w.nextReview && !isDue(w) ? `<div class="wnext">наступне повторення: ${formatDate(w.nextReview)}</div>` : "";
+    const meta = [
+      w.pack ? `набір: ${escapeHtml(w.pack)}` : "",
+      w.nextReview && !isDue(w) ? `наступне повторення: ${formatDate(w.nextReview)}` : "",
+    ].filter(Boolean).join(" · ");
+    const next = meta ? `<div class="wnext">${meta}</div>` : "";
     return (
       `<div class="word-row" data-id="${escapeHtml(w.id)}">` +
         '<div class="word-main">' +

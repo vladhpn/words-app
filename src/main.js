@@ -7,6 +7,7 @@ import * as grammar from "./grammar.js";
 import * as add from "./add.js";
 import * as library from "./library.js";
 import * as settings from "./settings.js";
+import { importPacks } from "./packs.js";
 
 const PANELS = { practice, grammar, add, library, settings };
 const TAB_KEY = "slovnychok:tab";
@@ -72,7 +73,22 @@ try { saved = localStorage.getItem(TAB_KEY); } catch { /* ignore */ }
 renderStats();
 renderSyncStatus();
 showTab(saved || "practice");
-store.startSync();
+store.startSync().then(() => {
+  const report = importPacks();
+  if (report.length) {
+    const total = report.reduce((n, r) => n + r.count, 0);
+    toast(`Додано ${total} нових слів: ${report.map(r => r.name).join(", ")}`);
+  }
+});
+
+function toast(text) {
+  const el = document.createElement("div");
+  el.className = "toast";
+  el.textContent = text;
+  document.body.appendChild(el);
+  setTimeout(() => el.classList.add("hide"), 4500);
+  setTimeout(() => el.remove(), 5000);
+}
 
 if (import.meta.env.PROD && "serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js").catch(() => {});
