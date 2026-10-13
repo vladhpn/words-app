@@ -12,7 +12,7 @@ const PUSH_DELAY = 1500;
 const PULL_INTERVAL = 60 * 1000;
 
 export function emptyData() {
-  return { version: 1, words: [], deleted: {}, settings: { dailyGoal: 15, updatedAt: 0 }, grammar: {} };
+  return { version: 1, words: [], deleted: {}, settings: { dailyGoal: 15, updatedAt: 0 }, grammar: {}, packs: {} };
 }
 
 function normalizeWord(w) {
@@ -33,6 +33,7 @@ export function normalizeData(raw) {
   if (raw.deleted && typeof raw.deleted === "object") d.deleted = { ...raw.deleted };
   if (raw.settings && typeof raw.settings === "object") d.settings = { ...d.settings, ...raw.settings };
   if (raw.grammar && typeof raw.grammar === "object") d.grammar = { ...raw.grammar };
+  if (raw.packs && typeof raw.packs === "object") d.packs = { ...raw.packs };
   return d;
 }
 
@@ -57,7 +58,10 @@ export function mergeData(a, b) {
   for (const [id, g] of Object.entries(b.grammar || {})) {
     if (!grammar[id] || (g.updatedAt || 0) > (grammar[id].updatedAt || 0)) grammar[id] = g;
   }
-  return { version: 1, words, deleted, settings: { ...settings }, grammar };
+  const packs = { ...a.packs };
+  for (const [id, ts] of Object.entries(b.packs || {})) packs[id] = Math.max(packs[id] || 0, ts);
+
+  return { version: 1, words, deleted, settings: { ...settings }, grammar, packs };
 }
 
 // Key-order independent JSON, used to detect whether anything changed.
@@ -130,6 +134,41 @@ export function addWords(list) {
   }));
   data.words.push(...added);
   commit();
+  return added;
+}
+
+// Stable id per pack entry, so every device creates the same word and
+// sync merges them instead of producing duplicates.
+function packWordId(pack, en) {
+  let h = 0x811c9dc5;
+  for (const ch of pack + "|" + wordKey(en)) {
+    h ^= ch.codePointAt(0);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return "p_" + h.toString(36);
+}
+
+/**
+ * Add pack entries that were never imported on any device. Imported ids are
+ * remembered in data.packs, so words the user deleted don't come back.
+ * Pack words get updatedAt = 1: any real progress from another device wins.
+ */
+export function addPackWords(pack, items) {
+  const now = Date.now();
+  let added = 0, seen = 0;
+  for (const item of items) {
+    const id = packWordId(pack, item.en);
+    if (data.packs[id]) continue;
+    data.packs[id] = now;
+    seen++;
+    if (data.deleted[id] || getWord(id) || hasWord(item.en)) continue;
+    data.words.push(normalizeWord({
+      id, en: item.en, ua: item.ua, example: item.example || "", pack,
+      createdAt: now + added, updatedAt: 1,
+    }));
+    added++;
+  }
+  if (seen) commit();
   return added;
 }
 
@@ -277,8 +316,9 @@ export function disconnectSync() {
   setStatus({ state: "off", message: null, at: null });
 }
 
+/** Starts background sync; resolves after the initial pull (immediately if sync is off). */
 export function startSync() {
-  if (syncConfig) syncNow();
+  const first = syncConfig ? syncNow() : Promise.resolve();
   const pullIfStale = () => {
     if (!syncConfig || document.visibilityState !== "visible") return;
     if (Date.now() - (syncConfig.lastSyncAt || 0) > 10 * 1000) syncNow();
@@ -290,4 +330,5 @@ export function startSync() {
   window.addEventListener("online", () => syncConfig && syncNow());
   window.addEventListener("offline", () => syncConfig && setStatus({ state: "offline", message: null }));
   setInterval(pullIfStale, PULL_INTERVAL);
+  return first;
 }

@@ -1,0 +1,119 @@
+standup — щоденний стендап
+Our standup starts at 10 every morning.
+
+blocker — блокер, перешкода
+I have one blocker: I don't have access to the staging server.
+
+to be blocked by — бути заблокованим через
+I'm blocked by the backend team, they haven't finished the API yet.
+
+status update — оновлення статусу
+I'll post a status update in Slack after lunch.
+
+in progress — у процесі
+The login page is still in progress.
+
+on track — за планом
+We're on track to finish the feature by Friday.
+
+behind schedule — із відставанням
+The migration is a bit behind schedule.
+
+ahead of schedule — з випередженням
+Good news: we're ahead of schedule this sprint.
+
+to wrap up — завершувати
+I'm wrapping up the refactoring today.
+
+to pick up a task — взяти задачу
+I'll pick up the next ticket from the backlog.
+
+to hand off — передати роботу
+I'll hand off this task to Maria before my vacation.
+
+ticket — тікет, задача
+Can you assign this ticket to me?
+
+backlog — беклог
+Let's move this bug to the backlog for now.
+
+sprint — спринт
+We have two days left in this sprint.
+
+deadline — дедлайн
+The deadline for this feature is next Wednesday.
+
+estimate — оцінка часу
+My estimate is about three days.
+
+to prioritize — пріоритезувати
+We need to prioritize the payment bug.
+
+urgent — терміновий
+Is this urgent, or can it wait until tomorrow?
+
+low-hanging fruit — легка швидка задача
+Fixing the typos is low-hanging fruit.
+
+scope — обсяг робіт
+This change is out of scope for this sprint.
+
+scope creep — розростання обсягу задачі
+We need to avoid scope creep on this feature.
+
+to follow up — повернутися до питання, нагадати
+I'll follow up with the designer about the mockups.
+
+to sync up — синхронізуватися
+Let's sync up after the standup.
+
+heads-up — попередження заздалегідь
+Just a heads-up: I'll be offline tomorrow afternoon.
+
+ETA — орієнтовний час готовності
+What's the ETA for the new build?
+
+to push back — переносити; заперечувати
+We had to push back the release by one week.
+
+dependency — залежність
+This task has a dependency on the auth service.
+
+to unblock — розблокувати
+Can you help me unblock this PR?
+
+to take ownership of — взяти відповідальність за
+I'll take ownership of the CI pipeline issues.
+
+workload — навантаження
+My workload is quite heavy this week.
+
+bandwidth — вільний ресурс, час (розм.)
+I don't have the bandwidth for another task right now.
+
+to reach out — звернутися, написати
+Feel free to reach out if you have questions.
+
+to loop in — залучити до обговорення
+Let me loop in our QA engineer.
+
+to circle back — повернутися до теми пізніше
+Let's circle back to this on Thursday.
+
+so far — поки що, на цей момент
+So far, I've fixed three of the five bugs.
+
+meanwhile — тим часом
+Meanwhile, I'll work on the unit tests.
+
+to be stuck on — застрягнути на
+I've been stuck on this TypeScript error since yesterday.
+
+to get back to someone — відповісти пізніше
+I'll check and get back to you in an hour.
+
+quick question — швидке питання
+Quick question: which branch should I use?
+
+action item — конкретна задача після мітингу
+My action item is to update the documentation.

@@ -1,5 +1,6 @@
 import * as store from "./store.js";
 import { escapeHtml } from "./util.js";
+import { parseWordBlocks } from "./parse.js";
 
 let panel;
 
@@ -61,25 +62,18 @@ export function mount(el) {
 export function show() {}
 
 function parseBulk(text) {
-  const blocks = text.split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
-  const added = [], errors = [], duplicates = [];
+  const parsed = parseWordBlocks(text);
+  const errors = parsed.errors.map(line => `«${line}» — не знайдено роздільник «—» між словом і перекладом`);
+  const added = [], duplicates = [];
   const seen = new Set();
-  for (const block of blocks) {
-    const lines = block.split("\n").map(l => l.trim()).filter(Boolean);
-    const first = lines[0];
-    const m = first.match(/^(.+?)\s*[—–]\s*(.+)$/) || first.match(/^(.+?)\s+-\s+(.+)$/) || first.match(/^(.+?)\t+(.+)$/);
-    if (!m) {
-      errors.push(`«${first}» — не знайдено роздільник «—» між словом і перекладом`);
-      continue;
-    }
-    const en = m[1].trim(), ua = m[2].trim();
-    const key = en.toLowerCase();
-    if (store.hasWord(en) || seen.has(key)) {
-      duplicates.push(en);
+  for (const item of parsed.items) {
+    const key = item.en.toLowerCase();
+    if (store.hasWord(item.en) || seen.has(key)) {
+      duplicates.push(item.en);
       continue;
     }
     seen.add(key);
-    added.push({ en, ua, example: lines.slice(1).join(" ") });
+    added.push(item);
   }
   return { added, errors, duplicates };
 }
